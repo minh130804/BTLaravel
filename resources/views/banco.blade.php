@@ -6,7 +6,7 @@
     <style>
         .board {
             display: grid;
-            /* Tạo lưới n cột, mỗi ô 50px */
+
             grid-template-columns: repeat({{ $n }}, 50px);
             width: fit-content;
             border: 2px solid #333;
@@ -39,7 +39,6 @@
     <div class="board">
         @for ($row = 0; $row < $n; $row++)
             @for ($col = 0; $col < $n; $col++)
-                {{-- Logic màu: Nếu tổng hàng + cột là số chẵn thì màu trắng, lẻ thì màu đen (hoặc ngược lại) --}}
                 <div class="cell {{ ($row + $col) % 2 == 0 ? 'white' : 'black' }}">
 
                 </div>

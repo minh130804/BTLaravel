@@ -2,6 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+// Import các Controller và Middleware
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\LoginController;
+use App\Http\Middleware\CheckLoginMiddleware;
 
 
 Route::get('/', function () {
@@ -9,12 +13,15 @@ Route::get('/', function () {
 })->name('home');
 
 
-Route::prefix('product')->group(function () {
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.post');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
+
+Route::prefix('product')->middleware(CheckLoginMiddleware::class)->group(function () {
     
-    Route::get('/', function () {
-        return view('product.index');
-    })->name('product.index'); 
+   
+    Route::get('/', [ProductController::class, 'index'])->name('product.index');
 
     
     Route::get('/add', function () {
@@ -22,8 +29,11 @@ Route::prefix('product')->group(function () {
     })->name('product.add');
 
     
+    Route::get('/detail/{id}', [ProductController::class, 'getDetail'])->name('product.detail');
+
+    
     Route::get('/{id?}', function ($id = '123') {
-        return "Chi tiết sản phẩm - ID: " . $id;
+        return "Chi tiết sản phẩm (Quick View) - ID: " . $id;
     });
 });
 
@@ -32,8 +42,7 @@ Route::get('/sinhvien/{name?}/{mssv?}', function ($name = 'Le Quang Minh', $mssv
     return "Thông tin sinh viên: <br> Họ tên: $name <br> MSSV: $mssv";
 });
 
-
-Route::get('/banco/{n}', function ($n) {
+Route::get('/banco/{n}', function ($n) { 
     return view('banco', ['n' => $n]);
 });
 

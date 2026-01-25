@@ -6,12 +6,30 @@
 </head>
 
 <body>
-    <h1>Danh sách sản phẩm mẫu</h1>
-    <ul>
-        <li>iPhone 15 Pro Max</li>
-        <li>Samsung Galaxy S24</li>
-        <li>MacBook Pro M3</li>
-    </ul>
+    <h1>
+        {{ $title }}
+    </h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+        @foreach ($products as $product)
+            <tr>
+                <td>{{ $product['id'] }}</td>
+                <td>{{ $product['name'] }}</td>
+                <td>{{ $product['price'] }}</td>
+                <td>
+                    <a href="{{ route('product.detail', $product['id']) }}">
+                        <button type="button">Details</button>
+                    </a>
+
+                </td>
+            </tr>
+
+        @endforeach
+    </table>
 
     <a href="{{ route('product.add') }}">
         <button type="button">Thêm mới sản phẩm</button>

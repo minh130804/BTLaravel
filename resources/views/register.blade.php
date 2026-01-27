@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Đăng nhập hệ thống</title>
+    <title>Đăng ký tài khoản</title>
     <style>
         body {
             font-family: sans-serif;
@@ -33,7 +33,7 @@
         button {
             width: 98%;
             padding: 10px;
-            background-color: #007bff;
+            background-color: #28a745;
             color: white;
             border: none;
             border-radius: 4px;
@@ -41,7 +41,7 @@
         }
 
         button:hover {
-            background-color: #0056b3;
+            background-color: #218838;
         }
 
         .error {
@@ -49,32 +49,34 @@
             font-size: 14px;
             margin-bottom: 10px;
         }
+
+        a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 14px;
+        }
     </style>
 </head>
 
 <body>
     <div class="login-box">
-        <h2>Đăng Nhập</h2>
-        @if(session('success'))
-            <div style="color: green; margin-bottom: 10px;">{{ session('success') }}</div>
-        @endif
+        <h2>Đăng Ký</h2>
 
-
+        {{-- Hiển thị lỗi nếu có --}}
         @if(session('error'))
             <div class="error">{{ session('error') }}</div>
         @endif
 
-        <form action="{{ route('login.post') }}" method="POST">
+        <form action="{{ route('register.post') }}" method="POST">
             @csrf
-
-            <input type="text" name="username" placeholder="Tên đăng nhập" required>
+            <input type="text" name="username" placeholder="Tên đăng nhập mới" required>
             <input type="password" name="password" placeholder="Mật khẩu" required>
+            <input type="password" name="confirm_password" placeholder="Nhập lại mật khẩu" required>
 
-            <button type="submit">Đăng nhập</button>
-            <br>
-            <a href="{{ route('register') }}" style="text-decoration: none; color: #007bff;">Chưa có tài khoản? Đăng ký
-                ngay</a>
+            <button type="submit">Đăng Ký</button>
         </form>
+        <br>
+        <a href="{{ route('login') }}">Đã có tài khoản? Đăng nhập</a>
     </div>
 </body>
 

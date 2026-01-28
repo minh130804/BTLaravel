@@ -5,19 +5,22 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\Session; 
+use Illuminate\Support\Facades\Session;
 
-class CheckLoginMiddleware
+class CheckAge
 {
     public function handle(Request $request, Closure $next): Response
     {
         
-        if (Session::has('user')) {
-            
+        $age = Session::get('age');
+
+        
+        if (is_numeric($age) && $age >= 18) {
+         
             return $next($request);
         }
 
-        
-        return redirect()->route('login')->with('error', 'Bạn phải đăng nhập để truy cập trang này!');
+       
+        return new Response("Không được phép truy cập", 403);
     }
 }

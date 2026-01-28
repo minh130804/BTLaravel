@@ -72,7 +72,8 @@
 
             <button type="submit">Đăng nhập</button>
             <br>
-            <a href="{{ route('register') }}" style="text-decoration: none; color: #007bff;">Chưa có tài khoản? Đăng ký
+            <a href="{{ route('auth.signin') }}" style="text-decoration: none; color: #007bff;">Chưa có tài khoản? Đăng
+                ký
                 ngay</a>
         </form>
     </div>

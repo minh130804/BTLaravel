@@ -27,6 +27,8 @@ class ProductController extends Controller
 
     public function getDetail($id)
     {
-        return "Xem chi tiết sản phẩm có ID: " . $id;
+        return "Xem chi tiết sản phẩm có ID: " . $id ;
+         
+        
     }
 }

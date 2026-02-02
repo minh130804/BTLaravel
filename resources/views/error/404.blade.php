@@ -15,7 +15,7 @@
 <body>
     <h1>Lỗi 404</h1>
     <p>Xin lỗi, trang bạn tìm kiếm không tồn tại trên hệ thống.</p>
-    <a href="{{ route('home') }}">Quay về trang chủ</a>
+    <a href="javascript:history.back()">Back</a>
 </body>
 
 </html>

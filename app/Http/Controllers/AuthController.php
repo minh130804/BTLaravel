@@ -7,6 +7,8 @@ use App\Models\User; // Gọi Model User để tương tác DB
 use Illuminate\Support\Facades\Auth; // Gọi thư viện Auth chuẩn
 use Illuminate\Support\Facades\Hash; // Gọi thư viện mã hóa mật khẩu
 use Illuminate\Support\Facades\Session;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -92,6 +94,51 @@ class AuthController extends Controller
         }
         Session::put('age', $age);
         return redirect()->route('product.index');
+    }
+    public function redirectToProvider($provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
+
+    // 2. Hàm nhận dữ liệu trả về từ Google/Facebook
+    public function handleProviderCallback($provider)
+    {
+        try {
+           
+            $socialUser = Socialite::driver($provider)->user();
+
+            
+            $user = User::where('email', $socialUser->getEmail())
+                        ->orWhere($provider . '_id', $socialUser->getId())
+                        ->first();
+
+            if ($user) {
+                
+                $user->update([
+                    $provider . '_id' => $socialUser->getId(),
+                    
+                ]);
+                
+                Auth::login($user);
+                
+                return redirect()->route('product.index');
+            } else {
+                // Nếu chưa có -> Tạo tài khoản mới
+                $newUser = User::create([
+                    'name' => $socialUser->getName() ?? $socialUser->getNickname(),
+                    'email' => $socialUser->getEmail(),
+                    $provider . '_id' => $socialUser->getId(),
+                    'password' => null, 
+                ]);
+
+                Auth::login($newUser);
+
+                return redirect()->route('product.index');
+            }
+
+       } catch (\Exception $e) {
+    dd($e->getMessage()); 
+}
     }
     
     

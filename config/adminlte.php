@@ -320,78 +320,44 @@ return [
             'url' => 'admin/blog',
             'can' => 'manage-blog',
         ],
-        [
-            'text' => 'pages',
-            'url' => 'admin/pages',
-            'icon' => 'far fa-fw fa-file',
-            'label' => 4,
-            'label_color' => 'success',
-        ],
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-        [
-            'text' => 'multilevel',
-            'icon' => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
-                ],
+        ['header' => 'QUẢN LÝ CỬA HÀNG'],
+    
+    // 1. Quản lý Danh mục
+    [
+        'text'    => 'Quản lý Danh mục',
+        'icon'    => 'fas fa-folder',
+        'submenu' => [
+            [
+                'text' => 'Xem danh sách',
+                'url'  => 'admin/category',
+                'icon' => 'fas fa-list',
             ],
+           
         ],
-        ['header' => 'labels'],
-        [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
-        ],
-        [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
-        ],
-        [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
-        ],
+    ],
+
+    // 2. Quản lý Sản phẩm (Link đến phần bạn đã làm trước đó)
+    [
+        'text' => 'Sản phẩm',
+        'url'  => 'product',
+        'icon' => 'fas fa-box',
+    ],
+
+    ['header' => 'TÀI KHOẢN'],
+    
+    // 3. Thông tin người dùng
+    [
+        'text' => 'Thông tin cá nhân',
+        'url'  => 'admin/profile', // Bạn cần tạo route này nếu chưa có
+        'icon' => 'fas fa-user',
+    ],
+        
+        
+        
+        
+        
+        
+        
     ],
 
     /*

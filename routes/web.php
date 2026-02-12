@@ -6,9 +6,12 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\AuthController; 
 
 
+
 use App\Http\Middleware\CheckLoginMiddleware;
 use App\Http\Middleware\CheckAge;
 use App\Http\Middleware\CheckTimeAccess;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProfileController;
 
 
 Route::get('/', function () {
@@ -36,6 +39,7 @@ Route::post('/store-age', [AuthController::class, 'storeAge'])->name('age.store'
 
 
 Route::prefix('product')->middleware(CheckLoginMiddleware::class)->group(function () {
+    
     
     Route::get('/', [ProductController::class, 'index'])->name('product.index');
 
@@ -67,6 +71,23 @@ Route::get('/banco/{n}', function ($n) {
 
 Route::resource('test', TestController::class);
 
+
+
+// Route cho Social Login (Google, Facebook)
+Route::get('auth/{provider}', [AuthController::class, 'redirectToProvider'])->name('auth.social');
+Route::get('auth/{provider}/callback', [AuthController::class, 'handleProviderCallback']);
+Route::prefix('admin/category')->middleware('auth')->group(function () {
+    
+    Route::get('/', [CategoryController::class, 'index'])->name('category.index');
+    Route::get('/add', [CategoryController::class, 'create'])->name('category.create');
+    Route::post('/store', [CategoryController::class, 'store'])->name('category.store');
+    Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::post('/update/{id}', [CategoryController::class, 'update'])->name('category.update');
+    Route::get('/delete/{id}', [CategoryController::class, 'destroy'])->name('category.delete');
+});
+Route::prefix('admin/profile')->middleware('auth')->group(function () {
+    Route::get('/', [ProfileController::class, 'index'])->name('profile.index');
+});
 Route::fallback(function () {
     return view('error.404');
 });

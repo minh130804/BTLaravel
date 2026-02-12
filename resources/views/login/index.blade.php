@@ -1,16 +1,14 @@
-{{-- Kế thừa layout Auth của AdminLTE --}}
 @extends('adminlte::auth.auth-page', ['auth_type' => 'login'])
 
-{{-- Cấu hình tiêu đề trang --}}
 @section('adminlte_css_pre')
 <link rel="stylesheet" href="{{ asset('vendor/icheck-bootstrap/icheck-bootstrap.min.css') }}">
 @stop
 
-{{-- Dòng chữ bên trên form --}}
 @section('auth_header', 'Đăng nhập để bắt đầu phiên làm việc')
 
 @section('auth_body')
-{{-- Hiển thị thông báo thành công (nếu từ trang đăng ký chuyển qua) --}}
+
+{{-- Hiển thị thông báo thành công --}}
 @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show" role="alert">
         <i class="fas fa-check-circle"></i> {{ session('success') }}
@@ -20,7 +18,7 @@
     </div>
 @endif
 
-{{-- Hiển thị lỗi đăng nhập chung --}}
+{{-- Hiển thị thông báo lỗi --}}
 @if(session('error'))
     <div class="alert alert-danger alert-dismissible fade show" role="alert">
         <i class="fas fa-exclamation-triangle"></i> {{ session('error') }}
@@ -33,7 +31,7 @@
 <form action="{{ route('login.post') }}" method="post">
     @csrf
 
-    {{-- Input Email --}}
+    {{-- Email --}}
     <div class="input-group mb-3">
         <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
             value="{{ old('email') }}" placeholder="Email" autofocus>
@@ -49,7 +47,7 @@
         @enderror
     </div>
 
-    {{-- Input Password --}}
+    {{-- Password --}}
     <div class="input-group mb-3">
         <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
             placeholder="Mật khẩu">
@@ -65,7 +63,7 @@
         @enderror
     </div>
 
-    {{-- Nút Remember & Submit --}}
+    {{-- Remember & Submit --}}
     <div class="row">
         <div class="col-7">
             <div class="icheck-primary">
@@ -80,9 +78,27 @@
         </div>
     </div>
 </form>
+
+{{-- --- PHẦN MỚI THÊM: SOCIAL LOGIN --- --}}
+<div class="social-auth-links text-center mb-3">
+    <p>- HOẶC -</p>
+
+    {{-- Nút Facebook --}}
+    <a href="{{ route('auth.social', 'facebook') }}" class="btn btn-block btn-primary"
+        style="background-color: #3b5998; border-color: #3b5998;">
+        <i class="fab fa-facebook mr-2"></i> Đăng nhập bằng Facebook
+    </a>
+
+    {{-- Nút Google --}}
+    <a href="{{ route('auth.social', 'google') }}" class="btn btn-block btn-danger"
+        style="background-color: #dd4b39; border-color: #dd4b39;">
+        <i class="fab fa-google mr-2"></i> Đăng nhập bằng Google
+    </a>
+</div>
+{{-- ----------------------------------- --}}
+
 @stop
 
-{{-- Footer: Link chuyển qua trang đăng ký --}}
 @section('auth_footer')
 <p class="my-0">
     <a href="{{ route('auth.signin') }}" class="text-center">Đăng ký tài khoản mới</a>

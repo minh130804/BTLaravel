@@ -97,7 +97,7 @@ class AuthController extends Controller
     }
     public function redirectToProvider($provider)
     {
-        return Socialite::driver($provider)->redirect();
+        return Socialite::driver($provider)->stateless()->redirect();
     }
 
     // 2. Hàm nhận dữ liệu trả về từ Google/Facebook
@@ -105,7 +105,7 @@ class AuthController extends Controller
     {
         try {
            
-            $socialUser = Socialite::driver($provider)->user();
+            $socialUser = Socialite::driver($provider)->stateless()->user();
 
             
             $user = User::where('email', $socialUser->getEmail())
@@ -137,7 +137,7 @@ class AuthController extends Controller
             }
 
        } catch (\Exception $e) {
-    dd($e->getMessage()); 
+    dd($e); 
 }
     }
     

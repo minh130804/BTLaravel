@@ -12,12 +12,13 @@ use App\Http\Middleware\CheckAge;
 use App\Http\Middleware\CheckTimeAccess;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HomeController;
 
 
-Route::get('/', function () {
-    return view('login.index');
-})->name('login.index');
-
+// Route::get('/', function () {
+//     return view('login.index');
+// })->name('login.index');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'postLogin'])->name('login.post');
